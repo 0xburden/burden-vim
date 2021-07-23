@@ -1,5 +1,5 @@
 # (N)VIM
-the 0xburden way
+_the 0xburden way_
 
 ### What the fuck does that mean?
 * Sensible defaults (isolated non-plugin version included)

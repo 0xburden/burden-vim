@@ -23,4 +23,4 @@ This setup isn't too heavy on deps but there is still a few
 the packages fzy, ripgrep and the_silver_searcher will need to be installed or built for fuzzy find to work right
 
 ### JS necessities
-You'll need nodejs+npm and prettier
+You'll need nodejs+npm and prettier, the rest should be pulled in on install

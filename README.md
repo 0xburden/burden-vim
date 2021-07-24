@@ -5,6 +5,7 @@ _the 0xburden way_
 * Sensible defaults (isolated non-plugin version included)
 * Fuzzy finding
 * JS Frontend goodies
+* Elixir and solidity syntax support, because fuck it
 * Terminal and buffer splitting shortcuts
 * File explorer shortcuts
 * Street cred

@@ -24,7 +24,7 @@ Plug 'w0rp/ale'
 Plug 'jhawthorn/fzy'
 Plug 'alvan/vim-closetag'
 Plug 'cloudhead/neovim-fuzzy'
-Plug 'nanotech/jellybeans.vim'
+Plug 'danilo-augusto/vim-afterglow'
 Plug 'tmsvg/pear-tree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
@@ -103,7 +103,10 @@ let g:netrw_localrmdir='rm -rf'
 nnoremap <leader>n :Lexplore<CR>
 
 set syntax 
-colorscheme jellybeans
+set background=dark
+colorscheme afterglow
+let g:afterglow_blackout=1
+let g:afterglow_italic_comments=1
 if has('termguicolors')
   set termguicolors
 endif

@@ -1,3 +1,4 @@
+![Terminal running neovim with this configuration](https://i.dbb.co/PM89bkb/burden-vim.gif)
 # (N)VIM
 _the 0xburden way_
 

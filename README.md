@@ -1,4 +1,4 @@
-![Terminal running neovim with this configuration](https://github.com/0xburden/burden-vim/images/burden-vim.gif)
+![Terminal running neovim with this configuration](https://raw.githubusercontent.com/0xburden/burden-vim/main/images/burden-vim.gif)
 # (N)VIM
 _the 0xburden way_
 

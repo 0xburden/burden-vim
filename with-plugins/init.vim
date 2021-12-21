@@ -16,11 +16,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-" post install (yarn install | npm install) then load plugin only for editing supported files
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'jhawthorn/fzy'
 Plug 'alvan/vim-closetag'
 Plug 'cloudhead/neovim-fuzzy'
@@ -67,7 +63,7 @@ set hidden
 " === Show incomplete commands ===
 set showcmd
 
-" === Gotta go fast 
+" === Gotta go fast
 set ttyfast
 
 " === Tab settings ===
@@ -102,7 +98,7 @@ let g:netrw_localrmdir='rm -rf'
 " === Bind file exlporer to <Leader>n
 nnoremap <leader>n :Lexplore<CR>
 
-set syntax 
+set syntax
 set background=dark
 colorscheme afterglow
 let g:afterglow_blackout=1
@@ -115,7 +111,7 @@ endif
 nnoremap <C-p> :FuzzyOpen<CR>
 
 " ====================
-"       Pear Tree 
+"       Pear Tree
 " ====================
 
 let g:pear_tree_smart_openers = 0
@@ -123,16 +119,23 @@ let g:pear_tree_smart_closers = 0
 let g:pear_tree_smart_backspace = 0
 
 " ====================
-"       Prettier 
+"        ALE
 " ====================
-
-let g:prettier#config#single_quote = get(g:,'prettier#config#single_quote', 'true')
-let g:prettier#config#trailing_comma = get(g:,'prettier#config#trailing_comma', 'es5')
-let g:prettier#config#print_width = get(g:, 'prettier#config#print_width', 100)
+" Fix files with prettier, and then ESLint.
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint', 'prettier'],
+\   'typescript': ['eslint', 'prettier'],
+\   'css': ['prettier'],
+\   'scss': ['prettier'],
+\}
+let g:ale_fix_on_save = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --no-semi'
+nnoremap <leader>p :ALEFix<CR>
 
 
 " ====================
-"       closetag 
+"       closetag
 " ====================
 
 let g:closetag_filenames = '*.html,*.js,*.jsx,*.tsx,*.njk,*.vue'
@@ -142,7 +145,7 @@ let g:closetag_xhtml_filetypes = 'js,jsx,tsx'
 let g:closetag_shortcut = '>'
 
 " ====================
-"       Coc.nvim  
+"       Coc.nvim
 " ====================
 
 " Some servers have issues with backup files, see #649.

@@ -17,6 +17,8 @@ Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'dense-analysis/ale'
+" post install (yarn install | npm install) then load plugin only for editing supported files
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'jhawthorn/fzy'
 Plug 'alvan/vim-closetag'
 Plug 'cloudhead/neovim-fuzzy'
@@ -119,19 +121,15 @@ let g:pear_tree_smart_closers = 0
 let g:pear_tree_smart_backspace = 0
 
 " ====================
-"        ALE
+"     ALE/Prettier
 " ====================
-" Fix files with prettier, and then ESLint.
+" Fix files with prettier, then eslint.
+
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint', 'prettier'],
-\   'typescript': ['eslint', 'prettier'],
-\   'css': ['prettier'],
-\   'scss': ['prettier'],
+\   'javascript': ['eslint'],
 \}
-let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --no-semi'
-nnoremap <leader>p :ALEFix<CR>
+nnoremap <leader>p :Prettier<CR> :ALEFix<CR>
 
 
 " ====================

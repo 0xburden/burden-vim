@@ -16,11 +16,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'dense-analysis/ale'
-" post install (yarn install | npm install) then load plugin only for editing supported files
-Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'jhawthorn/fzy'
-Plug 'alvan/vim-closetag'
 Plug 'cloudhead/neovim-fuzzy'
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'tmsvg/pear-tree'
@@ -29,8 +25,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'tomlion/vim-solidity'
 Plug 'elixir-editors/vim-elixir'
 Plug 'wakatime/vim-wakatime'
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
+autocmd ColorScheme * highlight CocUnusedHighlight ctermbg=Yellow guibg=Yellow ctermfg=Black guifg=Black
+ 
 " === Change leader to something better
 let mapleader=";"
 
@@ -122,30 +121,6 @@ let g:pear_tree_smart_closers = 0
 let g:pear_tree_smart_backspace = 0
 
 " ====================
-"     ALE/Prettier
-" ====================
-" Fix files with prettier, then eslint.
-
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
-\   'typescript': ['eslint'],
-\   'typescriptreact': ['eslint'],
-\}
-nnoremap <leader>p :Prettier<CR> :ALEFix<CR>
-
-
-" ====================
-"       closetag
-" ====================
-
-let g:closetag_filenames = '*.html,*.js,*.jsx,*.tsx,*.njk,*.vue'
-let g:closetag_xhtml_filenames = '*.js,*.jsx,*.tsx'
-let g:closetag_filetypes = 'html,js,jsx,tsx,vue,njk'
-let g:closetag_xhtml_filetypes = 'js,jsx,tsx'
-let g:closetag_shortcut = '>'
-
-" ====================
 "       Coc.nvim
 " ====================
 
@@ -214,6 +189,30 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
 
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Formatting selected code
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s)
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:Format` command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
@@ -236,6 +235,12 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" extensions
+let g:coc_global_extensions = ['coc-json','coc-eslint', 'coc-css', 'coc-tsserver', 'coc-biome']
+
+" Format code on command
+nnoremap <leader>p :Format<CR>
 
 " ====================
 " Misc. Remaps
